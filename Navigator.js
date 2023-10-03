@@ -55,7 +55,7 @@ export default function Navigator() {
           }}
         />
         <Tab.Screen
-          name="Configurações"
+          name="Convensor"
           component={ConvMoedas}
           options={{
             tabBarLabel: 'Configurações',
