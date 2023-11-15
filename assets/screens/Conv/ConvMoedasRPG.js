@@ -287,8 +287,8 @@ export default function ConvMoedas() {
       <View style={styles.container}>
         <View style={styles.caixa1}>
           <TouchableOpacity onPress={onOpen1} style={styles.iconName}>
-            <Text style={styles.coin}>
-              {coinConv !== null ? simbolo1() : "Selecione uma moeda"}
+            <Text style={coin !== null ? styles.coin : styles.defaultCoin}>
+              {coin !== null ? simbolo1() : ""}
             </Text>
 
             <Text style={styles.Selecao}>
@@ -308,8 +308,8 @@ export default function ConvMoedas() {
         </View>
         <View style={styles.caixa2}>
           <TouchableOpacity onPress={onOpen2} style={styles.iconName}>
-            <Text style={styles.coin}>
-              {coinConv !== null ? simbolo2() : "Selecione uma moeda"}
+            <Text style={coinConv !== null ? styles.coin : styles.defaultCoin}>
+              {coinConv !== null ? simbolo2() : ""}
             </Text>
             <Text style={styles.font_button}>
               {coinConv !== null ? coinConv : "Selecione uma moeda"}

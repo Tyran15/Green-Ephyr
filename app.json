@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "Aplicativo-do-rpg",
+    "name": "Green Ephyr",
     "slug": "Aplicativo-do-rpg",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "assets/fonts/*"
@@ -21,10 +21,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tyran_master15.Aplicativodorpg"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f0562b5c-ea00-402e-8fe2-a4e97f6adf1e"
+      }
     }
   }
 }

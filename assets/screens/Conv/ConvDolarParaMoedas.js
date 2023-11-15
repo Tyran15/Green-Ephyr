@@ -126,8 +126,8 @@ export default function ConvDolarParaMoeda() {
         </View>
         <View style={styles.caixa2}>
           <TouchableOpacity style={styles.iconName} onPress={onOpen1}>
-            <Text style={styles.coin}>
-              {coin !== null ? simbolo() : "Selecione uma moeda"}
+          <Text style={coin!== null ? styles.coin : styles.defaultCoin}>
+              {coin !== null ? simbolo() : ""}
             </Text>
 
             <Text style={styles.Selecao}>
