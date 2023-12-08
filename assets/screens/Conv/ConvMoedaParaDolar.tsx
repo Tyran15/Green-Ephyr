@@ -1,17 +1,16 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput } from "react-native";
 import { Modalize } from "react-native-modalize";
-import {
-  GestureHandlerRootView,
-  TextInput,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Font from "expo-font";
 
-export default function ConvMoedaParaDolar() {
-  const [coin, setCoin] = useState(null);
-  const [dinheiro, setDinheiro] = useState(null);
-  const [result, setResult] = useState(null);
-  const [simboloCoin, setSimboloCoin] = useState(null);
+interface ConvMoedaParaDolarProps {}
+
+const ConvMoedaParaDolar: React.FC<ConvMoedaParaDolarProps> = () => {
+  const [coin, setCoin] = useState<string | null>(null);
+  const [dinheiro, setDinheiro] = useState<string | null>(null);
+  const [result, setResult] = useState<number | null>(null);
+  const [simboloCoin, setSimboloCoin] = useState<string | null>(null);
 
   useEffect(() => {
     loadFonts();
@@ -23,8 +22,7 @@ export default function ConvMoedaParaDolar() {
     });
   };
 
-  const modalizeRef1 = useRef(null);
-  const modalizeRef2 = useRef(null);
+  const modalizeRef1 = useRef<Modalize>(null);
 
   const onOpen1 = () => {
     modalizeRef1.current?.open();
@@ -32,14 +30,6 @@ export default function ConvMoedaParaDolar() {
 
   const onClose1 = () => {
     modalizeRef1.current?.close();
-  };
-
-  const onOpen2 = () => {
-    modalizeRef2.current?.open();
-  };
-
-  const onClose2 = () => {
-    modalizeRef2.current?.close();
   };
 
   const simbolo = () => {
@@ -61,14 +51,14 @@ export default function ConvMoedaParaDolar() {
     }
   };
 
-  const coin1 = (value) => {
+  const coin1 = (value: string) => {
     setCoin(value);
     onClose1();
     simbolo();
   };
 
   const Calculo = () => {
-    const dinheiroFloat = parseFloat(dinheiro);
+    const dinheiroFloat = parseFloat(dinheiro || '0');
 
     switch (coin) {
       case "Zigus":
@@ -78,27 +68,22 @@ export default function ConvMoedaParaDolar() {
       case "Lear":
         setResult((dinheiroFloat / 50) * 6.25);
         setSimboloCoin("Ξ");
-
         break;
       case "Atla":
         setResult((dinheiroFloat / 200) * 6.25);
         setSimboloCoin("Δ");
-
         break;
       case "Borul":
         setResult((dinheiroFloat / 2) * 6.25);
         setSimboloCoin("Π");
-
         break;
       case "Kraken":
         setResult((dinheiroFloat / 10) * 6.25);
         setSimboloCoin("@");
-
         break;
       case "Lonvicii":
         setResult((dinheiroFloat / 25) * 6.25);
         setSimboloCoin("#");
-
         break;
       default:
         break;
@@ -110,17 +95,16 @@ export default function ConvMoedaParaDolar() {
       <View style={styles.container}>
         <View style={styles.caixa1}>
           <TouchableOpacity onPress={onOpen1} style={styles.iconName}>
-          <Text style={coin!== null ? styles.coin : styles.defaultCoin}>
+            <Text style={coin !== null ? styles.coin : styles.defaultCoin}>
               {coin !== null ? simbolo() : ""}
             </Text>
-
             <Text style={styles.Selecao}>
               {coin !== null ? coin : "Selecione uma moeda"}
             </Text>
           </TouchableOpacity>
           <TextInput
             placeholder="Digite o valor"
-            value={dinheiro}
+            value={dinheiro || ''}
             onChangeText={(text) => setDinheiro(text)}
             keyboardType="decimal-pad"
             style={styles.input}
@@ -134,8 +118,7 @@ export default function ConvMoedaParaDolar() {
             <Text style={styles.coin}>$</Text>
             <Text style={styles.font_button}>Dólar</Text>
           </View>
-
-          {result !== null && !isNaN(parseFloat(dinheiro)) ? (
+          {result !== null && !isNaN(parseFloat(dinheiro || '0')) ? (
             <View style={styles.resultado}>
               <Text style={styles.font_button}>
                 {simboloCoin + " " + result.toFixed(2)}
@@ -183,7 +166,7 @@ export default function ConvMoedaParaDolar() {
       </View>
     </GestureHandlerRootView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -200,6 +183,11 @@ const styles = StyleSheet.create({
   font_button: {
     fontSize: 25,
     fontFamily: "coin-font",
+  },
+  defaultCoin: {
+    fontSize: 25,
+    fontFamily: "coin-font",
+    color: "transparent",
   },
   caixa1: {
     backgroundColor: "#CB91F9",
@@ -271,3 +259,5 @@ const styles = StyleSheet.create({
     paddingRight: 150,
   },
 });
+
+export default ConvMoedaParaDolar;

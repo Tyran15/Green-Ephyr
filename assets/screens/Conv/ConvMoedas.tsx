@@ -1,18 +1,15 @@
 import React, { useRef, useState, useEffect } from "react";
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, TextInput } from "react-native";
 import { Modalize } from "react-native-modalize";
-import {
-  GestureHandlerRootView,
-  TextInput,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import * as Font from "expo-font";
 
 export default function ConvMoedas() {
-  const [coin, setCoin] = useState(null);
-  const [coinConv, setCoinConv] = useState(null);
-  const [dinheiro, setDinheiro] = useState(null);
-  const [result, setResult] = useState(null);
-  const [simboloCoin, setSimboloCoin] = useState(null);
+  const [coin, setCoin] = useState<string | null>(null);
+  const [coinConv, setCoinConv] = useState<string | null>(null);
+  const [dinheiro, setDinheiro] = useState<string | null>(null);
+  const [result, setResult] = useState<number | null>(null);
+  const [simboloCoin, setSimboloCoin] = useState<string | null>(null);
 
   useEffect(() => {
     loadFonts();
@@ -24,8 +21,8 @@ export default function ConvMoedas() {
     });
   };
 
-  const modalizeRef1 = useRef(null);
-  const modalizeRef2 = useRef(null);
+  const modalizeRef1 = useRef<Modalize>(null);
+  const modalizeRef2 = useRef<Modalize>(null);
 
   const onOpen1 = () => {
     modalizeRef1.current?.open();
@@ -81,20 +78,20 @@ export default function ConvMoedas() {
     }
   };
 
-  const coin1 = (value) => {
+  const coin1 = (value: string) => {
     setCoin(value);
     onClose1();
     simbolo1();
   };
 
-  const coin2 = (value) => {
+  const coin2 = (value: string) => {
     setCoinConv(value);
     onClose2();
     simbolo2();
   };
 
   const Calculo = () => {
-    const dinheiroFloat = parseFloat(dinheiro);
+    const dinheiroFloat = parseFloat(dinheiro || "0");
 
     switch (coin) {
       case "Zigus":
@@ -297,7 +294,7 @@ export default function ConvMoedas() {
           </TouchableOpacity>
           <TextInput
             placeholder="Digite o valor"
-            value={dinheiro}
+            value={dinheiro || ""}
             onChangeText={(text) => setDinheiro(text)}
             keyboardType="decimal-pad"
             style={styles.input}
@@ -315,7 +312,7 @@ export default function ConvMoedas() {
               {coinConv !== null ? coinConv : "Selecione uma moeda"}
             </Text>
           </TouchableOpacity>
-          {result !== null && !isNaN(parseFloat(dinheiro)) ? (
+          {result !== null && !isNaN(parseFloat(dinheiro || "")) ? (
             <View style={styles.resultado}>
               <Text style={styles.font_button}>
                 {simboloCoin + " " + result.toFixed(2)}
@@ -416,6 +413,11 @@ const styles = StyleSheet.create({
   font_button: {
     fontSize: 25,
     fontFamily: "coin-font",
+  },
+  defaultCoin: {
+    fontSize: 25,
+    fontFamily: "coin-font",
+    color: "transparent",
   },
   caixa1: {
     backgroundColor: "#CB91F9",

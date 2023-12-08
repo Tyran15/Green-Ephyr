@@ -10,7 +10,7 @@ const data = [
   },
 ];
 
-const HomeScreen = () => {
+const HomeScreen: React.FC = () => {
   const navigation = useNavigation();
 
   return (

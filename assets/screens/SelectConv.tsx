@@ -1,35 +1,47 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Button, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import * as font from "expo-font";
+import * as Font from "expo-font";
 
-export default function SelectConv({ navigation }) {
-  const LoadCoinFont = async () => {
-    await font.loadAsync({
-      'coin-font': require('../fonts/Coinsrpg-Regular.otf')
-    });
-  };
+interface SelectConvProps {
+  navigation: any;
+}
 
-  LoadCoinFont();
+const SelectConv: React.FC<SelectConvProps> = ({ navigation }) => {
+  const [fontLoaded, setFontLoaded] = useState(false);
 
-  const [valor, setValor] = useState("");
+  useEffect(() => {
+    const loadCoinFont = async () => {
+      await Font.loadAsync({
+        'coin-font': require('../fonts/Coinsrpg-Regular.otf')
+      });
+      setFontLoaded(true);
+    };
+
+    loadCoinFont();
+  }, []);
+
   const Navigation = useNavigation();
 
-  const headleConvMoedas = () => {
+  const handleConvMoedas = () => {
     Navigation.navigate("ConvMoedas");
   };
 
-  const headleConvMoedaDolar = () => {
+  const handleConvMoedaDolar = () => {
     Navigation.navigate("ConvMoedaDolar");
   };
 
-  const headleConvDolarMoeda = () => {
+  const handleConvDolarMoeda = () => {
     Navigation.navigate("ConvDolarMoeda");
   };
 
+  if (!fontLoaded) {
+    return null; // or a loading indicator
+  }
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.caixa} onPress={headleConvMoedas}>
+      <TouchableOpacity style={styles.caixa} onPress={handleConvMoedas}>
         <Text style={styles.coin}>Σ</Text>
         <View style={styles.div}>
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Conversão</Text>
@@ -37,7 +49,7 @@ export default function SelectConv({ navigation }) {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.caixa} onPress={headleConvDolarMoeda}>
+      <TouchableOpacity style={styles.caixa} onPress={handleConvDolarMoeda}>
         <Text style={styles.coin$}>$</Text>
         <View style={styles.div}>
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Conversão</Text>
@@ -45,7 +57,7 @@ export default function SelectConv({ navigation }) {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.caixa} onPress={headleConvMoedaDolar}>
+      <TouchableOpacity style={styles.caixa} onPress={handleConvMoedaDolar}>
         <Text style={styles.coin}>Π</Text>
         <View style={styles.div}>
           <Text style={{ fontSize: 20, fontWeight: "bold" }}>Conversão</Text>
@@ -54,7 +66,7 @@ export default function SelectConv({ navigation }) {
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -100,3 +112,5 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 });
+
+export default SelectConv;
